@@ -44,7 +44,7 @@ spec:
             - name: NEXTCLOUD_ADMIN_USER
               value: "admin"
             - name: NEXTCLOUD_TRUSTED_DOMAINS
-              value: nextlcoud.domain.com
+              value: nextlcoud.sharmahome.info home-macmini 10.0.0.13
           image: nextcloud:latest
           name: nextcloud
           lifecycle: ##Optional: should run a nextcloud cronjob for the installed apache browser
