@@ -44,7 +44,7 @@ spec:
             - name: NEXTCLOUD_ADMIN_USER
               value: "admin"
             - name: NEXTCLOUD_TRUSTED_DOMAINS
-              value: nextlcoud.sharmahome.info home-macmini 10.0.0.13
+              value: nextlcoud.sharmahome.info home-macmini 10.0.0.20
           image: nextcloud:latest
           name: nextcloud
           lifecycle: ##Optional: should run a nextcloud cronjob for the installed apache browser
@@ -114,14 +114,32 @@ metadata:
   name: nextcloud
   namespace: nextcloud
 spec:
-  type: NodePort
   selector:
     app: nextcloud
   ports:
     - name: http
+      protocol: TCP
       targetPort: 80
       port: 80
-      nodePort: 30123
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  rules:
+    - host: nextcloud.sharmahome.info
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 80
 
 ---
 apiVersion: v1
