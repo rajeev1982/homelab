@@ -45,6 +45,8 @@ spec:
               value: "admin"
             - name: NEXTCLOUD_TRUSTED_DOMAINS
               value: nextlcoud.sharmahome.info home-macmini 10.0.0.20
+            - name: APACHE_BODY_LIMIT
+              value: "10737418240"
           image: nextcloud:latest
           name: nextcloud
           lifecycle: ##Optional: should run a nextcloud cronjob for the installed apache browser
@@ -56,11 +58,11 @@ spec:
                   - "apt-get update && apt-get install -y openrc && start-stop-daemon --start --background --pidfile /cron.pid --exec /cron.sh"
           resources:
             limits:
-              memory: "1000Mi"
-              cpu: "500m"
+              memory: "2000Mi"
+              cpu: "1"
             requests:
-              memory: "800Mi"
-              cpu: "300m"
+              memory: "128Mi"
+              cpu: "50m"
           volumeMounts:
             - name: apps
               mountPath: /var/www/html/custom_apps
@@ -128,6 +130,9 @@ kind: Ingress
 metadata:
   name: nextcloud
   namespace: nextcloud
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "10g"
 spec:
   rules:
     - host: nextcloud.sharmahome.info

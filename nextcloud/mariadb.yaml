@@ -26,8 +26,8 @@ spec:
               cpu: "500m"
               memory: "1000Mi"
             requests:
-              cpu: "200m"
-              memory: "600Mi"
+              cpu: "100m"
+              memory: "200Mi"
           args:
             - --transaction-isolation=READ-COMMITTED
             - --binlog-format=ROW
