@@ -44,7 +44,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/redis
+    path: /mnt/Data/NextCloud/redis
 
 ---
 apiVersion: v1

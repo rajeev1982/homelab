@@ -131,7 +131,7 @@ metadata:
   name: nextcloud
   namespace: nextcloud
   annotations:
-    kubernetes.io/ingress.class: nginx
+    spec.ingressClassName: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "10g"
 spec:
   rules:
@@ -160,7 +160,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/apps
+    path: /mnt/Data/NextCloud/apps
 
 ---
 apiVersion: v1
@@ -176,7 +176,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/config
+    path: /mnt/Data/NextCloud/config
 
 ---
 apiVersion: v1
@@ -186,13 +186,13 @@ metadata:
   namespace: nextcloud
 spec:
   capacity:
-    storage: 10Gi
+    storage: 500Gi
   storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/data
+    path: /mnt/Data/NextCloud/data
 
 ---
 apiVersion: v1
@@ -208,7 +208,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/html
+    path: /mnt/Data/NextCloud/html
 
 ---
 apiVersion: v1

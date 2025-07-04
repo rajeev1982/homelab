@@ -103,7 +103,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/kubernetes-volumes/nextcloud/mariadb
+    path: /mnt/Data/NextCloud/mariadb
 
 ---
 apiVersion: v1
