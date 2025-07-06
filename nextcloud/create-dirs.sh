@@ -1,9 +1,9 @@
 #!/bin/bash
 
-root_folder=/opt/kubernetes-volumes/nextcloud.test
+root_folder=.
 
-rm -rf 		                ${root_folder}
-mkdir -p                    ${root_folder}
+# rm -rf 		                ${root_folder}
+# mkdir -p                    ${root_folder}
 
 mkdir 				        ${root_folder}/apps ${root_folder}/config ${root_folder}/data ${root_folder}/html
 chown -R www-data:www-data	${root_folder}/apps ${root_folder}/config ${root_folder}/data ${root_folder}/html
