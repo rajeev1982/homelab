@@ -45,3 +45,48 @@ spec:
   nfs:
     server: 10.0.0.1
     path: /mnt/Content
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath-storage
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: jellyfin-config
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cache
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath-storage
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: jellyfin-cache
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+  namespace: jellyfin
+spec:
+  volumeName: jellyfin-media
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
