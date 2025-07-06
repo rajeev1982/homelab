@@ -43,18 +43,3 @@ spec:
     - port: 6379
   selector:
     app: redis
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: redis
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-redis
-  storageClassName: hostpath-storage
-  resources:
-    requests:
-      storage: 1Gi
-  accessModes:
-    - ReadWriteMany

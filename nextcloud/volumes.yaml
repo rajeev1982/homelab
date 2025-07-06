@@ -93,3 +93,93 @@ spec:
   nfs:
     server: 10.0.0.1
     path: /mnt/Data/NextCloud/data
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-mariadb
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-redis
+  storageClassName: hostpath-storage
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: apps
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-apps
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-config
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: html
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-html
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-data
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi

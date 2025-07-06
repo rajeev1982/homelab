@@ -44,7 +44,7 @@ spec:
             - name: NEXTCLOUD_ADMIN_USER
               value: "admin"
             - name: NEXTCLOUD_TRUSTED_DOMAINS
-              value: nextlcoud.sharmahome.info home-macmini 10.0.0.20
+              value: nextcloud.sharmahome.info home-macmini 10.0.0.20
             - name: APACHE_BODY_LIMIT
               value: "10737418240"
           image: nextcloud:latest
@@ -122,63 +122,3 @@ spec:
                 name: nextcloud
                 port:
                   number: 80
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: apps
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-apps
-  storageClassName: hostpath-storage
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: config
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-config
-  storageClassName: hostpath-storage
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: html
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-html
-  storageClassName: hostpath-storage
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: data
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-data
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 500Gi

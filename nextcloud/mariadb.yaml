@@ -54,10 +54,10 @@ spec:
                   key: MYSQL_ROOT_PASSWORD
                   name: mariadb-secrets
           volumeMounts:
-            - name: db
+            - name: data
               mountPath: /var/lib/mysql
       volumes:
-        - name: db
+        - name: data
           persistentVolumeClaim:
             claimName: mariadb
 
@@ -88,17 +88,3 @@ spec:
   selector:
     app: mariadb
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mariadb
-  namespace: nextcloud
-spec:
-  volumeName: nextcloud-mariadb
-  storageClassName: hostpath-storage
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
