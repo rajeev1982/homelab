@@ -75,16 +75,16 @@ spec:
       volumes:
         - name: apps
           persistentVolumeClaim:
-            claimName: nextcloud-apps
+            claimName: apps
         - name: config
           persistentVolumeClaim:
-            claimName: nextcloud-config
+            claimName: config
         - name: data
           persistentVolumeClaim:
-            claimName: nextcloud-data
+            claimName: data
         - name: html
           persistentVolumeClaim:
-            claimName: nextcloud-html
+            claimName: html
 
 ---
 apiVersion: v1
@@ -122,3 +122,63 @@ spec:
                 name: nextcloud
                 port:
                   number: 80
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: apps
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-apps
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-config
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: html
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-html
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-data
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi

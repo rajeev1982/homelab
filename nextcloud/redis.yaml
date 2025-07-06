@@ -32,37 +32,6 @@ spec:
 
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nextcloud-redis
-  namespace: nextcloud
-spec:
-  capacity:
-    storage: 10Gi
-  storageClassName: hostpath-storage
-  persistentVolumeReclaimPolicy: Retain
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: /mnt/Data/NextCloud/redis
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: redis
-  namespace: nextcloud
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: hostpath-storage
-  resources:
-    requests:
-      storage: 10Gi
-  volumeName: nextcloud-redis
-
----
-apiVersion: v1
 kind: Service
 metadata:
   name: redis
@@ -74,3 +43,18 @@ spec:
     - port: 6379
   selector:
     app: redis
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis
+  namespace: nextcloud
+spec:
+  volumeName: nextcloud-redis
+  storageClassName: hostpath-storage
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteMany
