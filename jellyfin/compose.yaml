@@ -5,11 +5,11 @@ services:
     user: <USERID>:<USERID>
     network_mode: 'host'
     volumes:
-      - ./config:/config
-      - ./cache:/cache
-      - <PATH/TO/MEDIA>:/media
+      - /mnt/Data/Jellyfin/config:/config
+      - /mnt/Data/Jellyfin/cache:/cache
+      - /mnt/Content:/media
     restart: 'unless-stopped'
     environment:
-      - JELLYFIN_PublishedServerUrl=http://<IPADDRESSORDOMAIN>
+      - JELLYFIN_PublishedServerUrl=http://jellyfin.sharmahome.info
     extra_hosts:
       - "host.docker.internal:host-gateway"
