@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /mnt/Data/Jellyfin/config
+    path: /opt/kubernetes-volumes/jellyfin/config
 
 ---
 apiVersion: v1
@@ -21,13 +21,13 @@ metadata:
   namespace: jellyfin
 spec:
   capacity:
-    storage: 10Gi
+    storage: 1Gi
   storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /mnt/Data/Jellyfin/cache
+    path: /opt/kubernetes-volumes/jellyfin/cache
 
 ---
 apiVersion: v1
@@ -36,56 +36,12 @@ metadata:
   name: jellyfin-media
   namespace: jellyfin
 spec:
+  storageClassName: "nfs"
+  persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 500Gi
-  storageClassName: hostpath-storage
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
-  hostPath:
+  nfs:
+    server: 10.0.0.1
     path: /mnt/Content
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-config
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: hostpath-storage
-  resources:
-    requests:
-      storage: 1Gi
-  volumeName: jellyfin-config
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-cache
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: hostpath-storage
-  resources:
-    requests:
-      storage: 1Gi
-  volumeName: jellyfin-cache
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-media
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: hostpath-storage
-  resources:
-    requests:
-      storage: 500Gi
-  volumeName: jellyfin-media
