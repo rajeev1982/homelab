@@ -1,0 +1,40 @@
+{
+    "files.exclude": {
+        ".kafka": true,
+        ".redpanda": true,
+        ".postgres": true,
+        ".zookeeper": true,
+        ".ssh": true,
+        ".venv": true,
+        "**/__pycache__": true,
+        "**/.pyc": true,
+        "**/.pytest_cache": true
+    },
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.analysis.typeCheckingMode": "standard",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.rulers": [
+            132
+        ]
+    },
+    "black-formatter.args": [
+        "--line-length=132"
+    ],
+    "isort.args": [
+        "-l=132",
+        "profile=black"
+    ],
+    "flake8.args": [
+        "--max-line-length=132",
+        "--ignore=E203,E226,W503"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "--rootdir=test",
+        "-s",
+        "test"
+    ]
+}
