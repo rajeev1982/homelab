@@ -1,0 +1,71 @@
+import argparse
+import os
+import subprocess
+from typing import Any
+
+src_root = "/mnt/Data/NextCloud/data"
+# dst_root = "/mnt/Content/Pictures"
+dst_root = "/mnt/Content"
+
+folders = [
+    # Rajeev
+    {"src": f"{src_root}/rajeev/files/Media/.", "dst": f"{dst_root}/Rajeev"},
+    # Iva
+    {"src": f"{src_root}/iva/files/Media/.", "dst": f"{dst_root}/Iva"},
+    # Riya
+    {"src": f"{src_root}/riya/files/Media/.", "dst": f"{dst_root}/Riya"},
+    # Riva
+    {"src": f"{src_root}/riva/files/Media/.", "dst": f"{dst_root}/Riva"},
+]
+
+
+def sync_all_folders(folders: list[Any], dry_run: bool) -> None:
+    for folder in folders:
+        src_folder = folder["src"]
+        dst_folder = folder["dst"]
+        sync_folder(src_folder, dst_folder, dry_run)
+
+
+def sync_folder(src_folder: str, dst_folder: str, dry_run: bool) -> None:
+    if not os.path.exists(src_folder):
+        print(f"Error: Soruce {src_folder} does not exists, skipping")
+        return
+    elif not os.path.isdir(src_folder):
+        print(f"Error: Soruce {src_folder} either does not exists or not a folder, skipping")
+        return
+
+    if os.path.exists(dst_folder):
+        if not os.path.isdir(dst_folder):
+            print(f"Error: Destination {dst_folder} is not a folder, skipping")
+            return
+    else:
+        os.makedirs(dst_folder)
+
+    print(f"Syncing: {src_folder} => {dst_folder}")
+
+    cmd: list = [
+        "rsync",
+        "--verbose",
+        "--recursive",
+        "--times",
+        "--progress",
+        "--delete",
+        "--delete-excluded",
+        "--exclude=.*",
+        src_folder,
+        dst_folder
+    ]
+    if dry_run:
+        cmd.append("--dry-run")
+    instance: subprocess.CompletedProcess = subprocess.run(cmd)
+    if instance.returncode == 0:
+        print(f"Synced {src_folder} to {dst_folder}")
+    else:
+        print(f"Error in syncing {src_folder} to {dst_folder}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="ProgramName", description="What the program does", epilog="Text at the bottom of help")
+    parser.add_argument("-d", "--dry-run", action="store_true")
+    args = parser.parse_args()
+    sync_all_folders(folders, args.dry_run)
