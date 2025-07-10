@@ -3,19 +3,15 @@ import os
 import subprocess
 from typing import Any
 
-src_root = "/mnt/Data/NextCloud/data"
-# dst_root = "/mnt/Content/Pictures"
-dst_root = "/mnt/Content"
-
 folders = [
     # Rajeev
-    {"src": f"{src_root}/rajeev/files/Media/.", "dst": f"{dst_root}/Rajeev"},
+    {"src": "/mnt/Data/NextCloud/data/rajeev/files/Media/.", "dst": "/mnt/Content/Pictures/Rajeev"},
     # Iva
-    {"src": f"{src_root}/iva/files/Media/.", "dst": f"{dst_root}/Iva"},
+    {"src": "/mnt/Data/NextCloud/data/iva/files/Media/.", "dst": "/mnt/Content/Pictures/Iva"},
     # Riya
-    {"src": f"{src_root}/riya/files/Media/.", "dst": f"{dst_root}/Riya"},
+    {"src": "/mnt/Data/NextCloud/data/riya/files/Media/.", "dst": "/mnt/Content/Pictures/Riya"},
     # Riva
-    {"src": f"{src_root}/riva/files/Media/.", "dst": f"{dst_root}/Riva"},
+    {"src": "/mnt/Data/NextCloud/data/riva/files/Media/.", "dst": "/mnt/Content/Pictures/Riva"},
 ]
 
 
