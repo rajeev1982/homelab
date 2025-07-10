@@ -1,0 +1,1 @@
+0 */1 * * * root python3 /home/rajeev/Workspace/HomeLab/scripts/rsync_folders.py > /home/rajeev/Workspace/HomeLab/scripts/scripts.log 2>&1
