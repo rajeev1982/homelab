@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nextcloud
+  namespace: stage-nextcloud
+  labels:
+    app: nextcloud
+spec:
+  serviceName: nextcloud
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - env:
+            - name: REDIS_HOST
+              value: redis
+            - name: MYSQL_HOST
+              value: mariadb
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_DATABASE
+                  name: mariadb-secrets
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: mariadb-secrets
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_USER
+                  name: mariadb-secrets
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: mariadb-secrets
+            - name: NEXTCLOUD_ADMIN_USER
+              value: "admin"
+            - name: NEXTCLOUD_TRUSTED_DOMAINS
+              value: nextcloud-stage.sharmahome.info, 10.0.0.21
+            - name: APACHE_BODY_LIMIT
+              value: "10737418240"
+          image: nextcloud:latest
+          name: nextcloud
+          lifecycle: ##Optional: should run a nextcloud cronjob for the installed apache browser
+            postStart:
+              exec:
+                command:
+                  - "sh"
+                  - "-c"
+                  - "apt-get update && apt-get install -y openrc && start-stop-daemon --start --background --pidfile /cron.pid --exec /cron.sh"
+          resources:
+            limits:
+              memory: "4000Mi"
+              cpu: "2"
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+          volumeMounts:
+            - name: apps
+              mountPath: /var/www/html/custom_apps
+            - name: config
+              mountPath: /var/www/html/config
+            - name: data
+              mountPath: /var/www/html/data
+            - name: html
+              mountPath: /var/www/html
+      volumes:
+        - name: apps
+          persistentVolumeClaim:
+            claimName: apps
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+        - name: html
+          persistentVolumeClaim:
+            claimName: html
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  namespace: stage-nextcloud
+spec:
+  selector:
+    app: nextcloud
+  ports:
+    - name: http
+      protocol: TCP
+      targetPort: 80
+      port: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextcloud
+  namespace: stage-nextcloud
+  annotations:
+    spec.ingressClassName: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "10g"
+spec:
+  rules:
+    - host: nextcloud-stage.sharmahome.info
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 80

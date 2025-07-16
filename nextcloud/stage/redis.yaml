@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: stage-nextcloud
+  labels:
+    app: redis
+spec:
+  serviceName: redis
+  selector:
+    matchLabels:
+      app: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          ports:
+            - containerPort: 6379
+              name: redis
+          resources:
+            limits:
+              memory: "4000Mi"
+              cpu: "2"
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: redis
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: stage-nextcloud
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: redis
