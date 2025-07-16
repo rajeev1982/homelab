@@ -4,12 +4,12 @@ metadata:
   name: jellyfin-config
   namespace: jellyfin
 spec:
+  persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
-  storageClassName: hostpath-storage
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/jellyfin/config
 
@@ -20,12 +20,12 @@ metadata:
   name: jellyfin-cache
   namespace: jellyfin
 spec:
+  persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
-  storageClassName: hostpath-storage
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/jellyfin/cache
 
@@ -36,14 +36,17 @@ metadata:
   name: jellyfin-media
   namespace: jellyfin
 spec:
-  storageClassName: "nfs"
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 500Gi
   accessModes:
     - ReadWriteMany
-  nfs:
-    server: 10.0.0.1
+  # storageClassName: "nfs"
+  # nfs:
+  #   server: 10.0.0.1
+  #   path: /mnt/Data/NextCloud/data
+  storageClassName: hostpath-storage
+  hostPath:
     path: /mnt/Content
 
 ---
@@ -53,13 +56,13 @@ metadata:
   name: config
   namespace: jellyfin
 spec:
+  volumeName: jellyfin-config
   accessModes:
     - ReadWriteMany
-  storageClassName: hostpath-storage
   resources:
     requests:
       storage: 1Gi
-  volumeName: jellyfin-config
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -68,13 +71,13 @@ metadata:
   name: cache
   namespace: jellyfin
 spec:
+  volumeName: jellyfin-cache
   accessModes:
     - ReadWriteMany
-  storageClassName: hostpath-storage
   resources:
     requests:
       storage: 1Gi
-  volumeName: jellyfin-cache
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -84,9 +87,10 @@ metadata:
   namespace: jellyfin
 spec:
   volumeName: jellyfin-media
-  storageClassName: nfs
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 500Gi
+  # storageClassName: nfs
+  storageClassName: hostpath-storage

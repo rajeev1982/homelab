@@ -4,12 +4,12 @@ metadata:
   name: nextcloud-mariadb
   namespace: nextcloud
 spec:
-  storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/nextcloud/mariadb
 
@@ -20,12 +20,12 @@ metadata:
   name: nextcloud-redis
   namespace: nextcloud
 spec:
-  storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/nextcloud/redis
 
@@ -36,12 +36,12 @@ metadata:
   name: nextcloud-apps
   namespace: nextcloud
 spec:
-  storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/nextcloud/apps
 
@@ -52,12 +52,12 @@ metadata:
   name: nextcloud-config
   namespace: nextcloud
 spec:
-  storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/nextcloud/config
 
@@ -68,12 +68,12 @@ metadata:
   name: nextcloud-html
   namespace: nextcloud
 spec:
-  storageClassName: hostpath-storage
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
   hostPath:
     path: /opt/kubernetes-volumes/nextcloud/html
 
@@ -84,14 +84,17 @@ metadata:
   name: nextcloud-data
   namespace: nextcloud
 spec:
-  storageClassName: "nfs"
   persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 500Gi
   accessModes:
     - ReadWriteMany
-  nfs:
-    server: 10.0.0.1
+  storageClassName: hostpath-storage
+  # storageClassName: "nfs"
+  # nfs:
+  #   server: 10.0.0.1
+  #   path: /mnt/Data/NextCloud/data
+  hostPath:
     path: /mnt/Data/NextCloud/data
 
 ---
@@ -117,12 +120,12 @@ metadata:
   namespace: nextcloud
 spec:
   volumeName: nextcloud-redis
-  storageClassName: hostpath-storage
   resources:
     requests:
       storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -132,12 +135,12 @@ metadata:
   namespace: nextcloud
 spec:
   volumeName: nextcloud-apps
-  storageClassName: hostpath-storage
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -147,12 +150,12 @@ metadata:
   namespace: nextcloud
 spec:
   volumeName: nextcloud-config
-  storageClassName: hostpath-storage
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -162,12 +165,12 @@ metadata:
   namespace: nextcloud
 spec:
   volumeName: nextcloud-html
-  storageClassName: hostpath-storage
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -177,9 +180,10 @@ metadata:
   namespace: nextcloud
 spec:
   volumeName: nextcloud-data
-  storageClassName: nfs
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 500Gi
+  # storageClassName: nfs
+  storageClassName: hostpath-storage
