@@ -89,11 +89,11 @@ spec:
     storage: 500Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: hostpath-storage
   # storageClassName: "nfs"
   # nfs:
   #   server: 10.0.0.1
   #   path: /mnt/Data/NextCloud/data
+  storageClassName: hostpath-storage
   hostPath:
     path: /mnt/Data/NextCloud/data
 
