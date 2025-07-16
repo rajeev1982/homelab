@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jellyfin
+  namespace: stage-jellyfin
+  labels:
+    app: jellyfin
+spec:
+  serviceName: jellyfin
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - env:
+            - name: JELLYFIN_PublishedServerUrl
+              value: http://jellyfin.sharmahome.info
+          image: jellyfin/jellyfin:2025063005
+          name: jellyfin
+          resources:
+            limits:
+              memory: "4000Mi"
+              cpu: "2"
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: cache
+              mountPath: /cache
+            - name: media
+              mountPath: /media
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: cache
+          persistentVolumeClaim:
+            claimName: cache
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+  namespace: stage-jellyfin
+spec:
+  selector:
+    app: jellyfin
+  ports:
+    - name: http
+      protocol: TCP
+      targetPort: 8096
+      port: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  namespace: stage-jellyfin
+  annotations:
+    spec.ingressClassName: nginx
+spec:
+  rules:
+    - host: jellyfin-stage.sharmahome.info
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jellyfin
+                port:
+                  number: 80

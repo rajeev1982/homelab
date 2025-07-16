@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-config
+  namespace: stage-jellyfin
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath-storage
+  hostPath:
+    path: /opt/kubernetes-volumes/stage-jellyfin/config
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-cache
+  namespace: stage-jellyfin
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath-storage
+  hostPath:
+    path: /opt/kubernetes-volumes/stage-jellyfin/cache
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-media
+  namespace: stage-jellyfin
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  # storageClassName: "nfs"
+  # nfs:
+  #   server: 10.0.0.1
+  #   path: /mnt/Data/NextCloud/data
+  storageClassName: hostpath-storage
+  hostPath:
+    path: /mnt/Content
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+  namespace: stage-jellyfin
+spec:
+  volumeName: jellyfin-config
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: hostpath-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cache
+  namespace: stage-jellyfin
+spec:
+  volumeName: jellyfin-cache
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: hostpath-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+  namespace: stage-jellyfin
+spec:
+  volumeName: jellyfin-media
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  # storageClassName: nfs
+  storageClassName: hostpath-storage
