@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-mariadb
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-redis
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -34,7 +34,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-apps
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -50,7 +50,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-config
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -66,7 +66,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-html
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -82,7 +82,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nextcloud-data
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
   capacity:
@@ -102,7 +102,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mariadb
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-mariadb
   storageClassName: hostpath-storage
@@ -117,7 +117,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: redis
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-redis
   resources:
@@ -132,7 +132,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: apps
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-apps
   accessModes:
@@ -147,7 +147,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: config
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-config
   accessModes:
@@ -162,7 +162,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: html
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-html
   accessModes:
@@ -177,7 +177,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: data
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   volumeName: nextcloud-data
   accessModes:

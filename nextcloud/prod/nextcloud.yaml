@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: nextcloud
-  namespace: nextcloud
+  namespace: prod-nextcloud
   labels:
     app: nextcloud
 spec:
@@ -91,7 +91,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nextcloud
-  namespace: nextcloud
+  namespace: prod-nextcloud
 spec:
   selector:
     app: nextcloud
@@ -106,7 +106,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nextcloud
-  namespace: nextcloud
+  namespace: prod-nextcloud
   annotations:
     spec.ingressClassName: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "10g"
