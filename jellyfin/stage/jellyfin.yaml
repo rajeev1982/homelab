@@ -19,7 +19,7 @@ spec:
       containers:
         - env:
             - name: JELLYFIN_PublishedServerUrl
-              value: http://jellyfin.sharmahome.info
+              value: http://jellyfin-stage.sharmahome.info
           image: jellyfin/jellyfin:2025063005
           name: jellyfin
           resources:
