@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-redis
+  name: prod-nextcloud-redis
   namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -33,7 +33,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-apps
+  name: prod-nextcloud-apps
   namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -49,7 +49,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-config
+  name: prod-nextcloud-config
   namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -65,7 +65,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-html
+  name: prod-nextcloud-html
   namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -81,7 +81,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-data
+  name: prod-nextcloud-data
   namespace: prod-nextcloud
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -104,13 +104,13 @@ metadata:
   name: mariadb
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-mariadb
-  storageClassName: hostpath-storage
+  volumeName: prod-nextcloud-mariadb
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
+  storageClassName: hostpath-storage
 
 ---
 apiVersion: v1
@@ -119,12 +119,12 @@ metadata:
   name: redis
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-redis
+  volumeName: prod-nextcloud-redis
+  accessModes:
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
-  accessModes:
-    - ReadWriteMany
   storageClassName: hostpath-storage
 
 ---
@@ -134,7 +134,7 @@ metadata:
   name: apps
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-apps
+  volumeName: prod-nextcloud-apps
   accessModes:
     - ReadWriteMany
   resources:
@@ -149,7 +149,7 @@ metadata:
   name: config
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-config
+  volumeName: prod-nextcloud-config
   accessModes:
     - ReadWriteMany
   resources:
@@ -164,7 +164,7 @@ metadata:
   name: html
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-html
+  volumeName: prod-nextcloud-html
   accessModes:
     - ReadWriteMany
   resources:
@@ -179,7 +179,7 @@ metadata:
   name: data
   namespace: prod-nextcloud
 spec:
-  volumeName: nextcloud-data
+  volumeName: prod-nextcloud-data
   accessModes:
     - ReadWriteMany
   resources:
