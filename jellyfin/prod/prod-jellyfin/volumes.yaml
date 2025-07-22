@@ -56,7 +56,7 @@ metadata:
   name: config
   namespace: prod-jellyfin
 spec:
-  volumeName: jellyfin-config
+  volumeName: prod-jellyfin-config
   accessModes:
     - ReadWriteMany
   resources:
@@ -71,7 +71,7 @@ metadata:
   name: cache
   namespace: prod-jellyfin
 spec:
-  volumeName: jellyfin-cache
+  volumeName: prod-jellyfin-cache
   accessModes:
     - ReadWriteMany
   resources:
@@ -86,7 +86,7 @@ metadata:
   name: media
   namespace: prod-jellyfin
 spec:
-  volumeName: jellyfin-media
+  volumeName: prod-jellyfin-media
   accessModes:
     - ReadWriteMany
   resources:
