@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-config
+  name: prod-jellyfin-config
   namespace: prod-jellyfin
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-cache
+  name: prod-jellyfin-cache
   namespace: prod-jellyfin
 spec:
   persistentVolumeReclaimPolicy: Retain
@@ -33,7 +33,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-media
+  name: prod-jellyfin-media
   namespace: prod-jellyfin
 spec:
   persistentVolumeReclaimPolicy: Retain
