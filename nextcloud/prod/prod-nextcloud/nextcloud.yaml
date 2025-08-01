@@ -57,9 +57,9 @@ spec:
                   - "-c"
                   - "apt-get update && apt-get install -y openrc && start-stop-daemon --start --background --pidfile /cron.pid --exec /cron.sh"
           resources:
-            limits:
-              memory: "2000Mi"
-              cpu: "1"
+            # limits:
+            #   memory: "2Gi"
+            #   cpu: "1"
             requests:
               memory: "500Mi"
               cpu: "100m"
