@@ -6,6 +6,7 @@ from typing import Any
 folders = [
     # Rajeev
     {"src": "/mnt/Data/NextCloud/data/rajeev/files/Media/.", "dst": "/mnt/Content/Pictures/Rajeev"},
+    {"src": "/mnt/Data/NextCloud/data/rajeev/files/Documents/.", "dst": "/mnt/Content/Documents/Rajeev"},
     # Iva
     {"src": "/mnt/Data/NextCloud/data/iva/files/Media/.", "dst": "/mnt/Content/Pictures/Iva"},
     # Riya
