@@ -5,14 +5,13 @@ from typing import Any
 
 folders = [
     # Rajeev
-    {"src": "/mnt/Data/NextCloud/data/rajeev/files/Media/.", "dst": "/mnt/Content/Media/Rajeev"},
-    {"src": "/mnt/Data/NextCloud/data/rajeev/files/Documents/.", "dst": "/mnt/Content/Documents/Rajeev"},
+    {"src": "/mnt/Data/NextCloud/data/rajeev/files/.", "dst": "/mnt/Content/NextCloud/Rajeev"},
     # Iva
-    {"src": "/mnt/Data/NextCloud/data/iva/files/Media/.", "dst": "/mnt/Content/Media/Iva"},
+    {"src": "/mnt/Data/NextCloud/data/iva/files/.", "dst": "/mnt/Content/NextCloud/Iva"},
     # Riya
-    {"src": "/mnt/Data/NextCloud/data/riya/files/Media/.", "dst": "/mnt/Content/Media/Riya"},
+    {"src": "/mnt/Data/NextCloud/data/riya/files/.", "dst": "/mnt/Content/NextCloud/Riya"},
     # Riva
-    {"src": "/mnt/Data/NextCloud/data/riva/files/Media/.", "dst": "/mnt/Content/Media/Riva"},
+    {"src": "/mnt/Data/NextCloud/data/riva/files/.", "dst": "/mnt/Content/NextCloud/Riva"},
 ]
 
 
