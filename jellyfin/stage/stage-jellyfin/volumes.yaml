@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/stage-jellyfin/config
+    path: /home/shared/kubernetes-volumes/stage-jellyfin/config
 
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/stage-jellyfin/cache
+    path: /home/shared/kubernetes-volumes/stage-jellyfin/cache
 
 ---
 apiVersion: v1

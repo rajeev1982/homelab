@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/prod-nextcloud/mariadb
+    path: /home/shared/kubernetes-volumes/prod-nextcloud/mariadb
 
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/prod-nextcloud/redis
+    path: /home/shared/kubernetes-volumes/prod-nextcloud/redis
 
 ---
 apiVersion: v1
@@ -43,7 +43,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/prod-nextcloud/apps
+    path: /home/shared/kubernetes-volumes/prod-nextcloud/apps
 
 ---
 apiVersion: v1
@@ -59,7 +59,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/prod-nextcloud/config
+    path: /home/shared/kubernetes-volumes/prod-nextcloud/config
 
 ---
 apiVersion: v1
@@ -75,7 +75,7 @@ spec:
     - ReadWriteMany
   storageClassName: hostpath-storage
   hostPath:
-    path: /opt/kubernetes-volumes/prod-nextcloud/html
+    path: /home/shared/kubernetes-volumes/prod-nextcloud/html
 
 ---
 apiVersion: v1
