@@ -8,8 +8,7 @@
         ".venv": true,
         "**/__pycache__": true,
         "**/.pyc": true,
-        "**/.pytest_cache": true,
-        "**/.log": true
+        "**/.pytest_cache": true
     },
     "python.envFile": "${workspaceFolder}/.env",
     "python.analysis.typeCheckingMode": "standard",
