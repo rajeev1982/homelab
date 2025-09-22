@@ -1,1 +1,1 @@
-0 */1 * * * root python3 /usr/local/bin/homelab/nextcloud/rsync_folders.py > /var/log/nextcloud.log 2>&1
+0 */1 * * * root python3 /usr/local/bin/homelab/nextcloud/rsync_folders.py > /var/log/homelab/nextcloud.log 2>&1
