@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastify-demo
+  namespace: tutorial
+  labels:
+    app-name: fastify-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-name: fastify-demo
+  template:
+    metadata:
+      labels:
+        app-name: fastify-demo
+    spec:
+      containers:
+        - name: fastify-demo
+          image: funistoeng/procure:fastify-demo-20251227213638
+          ports:
+            - containerPort: 3000
+              name: service-port
+          env:
+            - name: TZ
+              value: "Asia/Kolkata"
+            - name: NODE_ENV
+              value: "production"
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: service-port
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: service-port
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastify-demo
+  namespace: tutorial
+spec:
+  selector:
+    app-name: fastify-demo
+  ports:
+    - name: service-port
+      protocol: TCP
+      targetPort: service-port
+      port: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastify-demo
+  namespace: tutorial
+spec:
+  rules:
+    - host: fastify-demo.isrtech.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fastify-demo
+                port:
+                  number: 80

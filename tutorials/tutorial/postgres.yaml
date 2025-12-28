@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: tutorial
+  labels:
+    app-name: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app-name: postgres
+  template:
+    metadata:
+      labels:
+        app-name: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:18.1-alpine3.22
+          env:
+            - name: POSTGRES_USER
+              value: demo
+            - name: POSTGRES_PASSWORD
+              value: demo
+            - name: POSTGRES_DB
+              value: fastify_demo
+          ports:
+            - containerPort: 5432
+              name: service-port
+          volumeMounts:
+            - name: data-dir
+              mountPath: /var/lib/postgresql
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+      volumes:
+        - name: data-dir
+          persistentVolumeClaim:
+            claimName: postgres
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres
+  namespace: tutorial
+spec:
+  storageClassName: hostpath-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: tutorial-postgres
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tutorial-postgres
+  namespace: tutorial
+spec:
+  capacity:
+    storage: 10Gi
+  storageClassName: hostpath-storage
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /home/shared/kubernetes-volumes/tutorial/postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: tutorial
+spec:
+  selector:
+    app-name: postgres
+  ports:
+    - name: service-port
+      protocol: TCP
+      targetPort: service-port
+      port: 5432
