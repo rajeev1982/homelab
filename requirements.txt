@@ -1,4 +1,0 @@
-# Common
-
-# Music scripts
-eyed3>=0.9.8
