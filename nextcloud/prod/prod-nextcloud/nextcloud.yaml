@@ -112,7 +112,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "10g"
 spec:
   rules:
-    - host: nextcloud.sharmahome.info
+    - host: nextcloud.isrtech.in
       http:
         paths:
           - path: /

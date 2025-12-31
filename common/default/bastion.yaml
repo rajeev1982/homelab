@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bastion
+  namespace: default
+  labels:
+    app: bastion
+spec:
+  serviceName: bastion
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bastion
+  template:
+    metadata:
+      labels:
+        app: bastion
+    spec:
+      containers:
+        - name: bastion
+          # image: binlab/bastion:1.2.0
+          image: funistoeng/procure:bastion-latest
+          env:
+            # - name: AUTHORIZED_KEYS
+            #   value: /var/lib/bastion/authorized_keys
+            - name: PUBKEY_AUTHENTICATION
+              value: "yes"
+            - name: TCP_FORWARDING
+              value: "yes"
+            - name: LISTEN_ADDRESS
+              value: "0.0.0.0"
+            - name: LISTEN_PORT
+              value: "22"
+          ports:
+            - containerPort: 22
+              name: service-port
+          volumeMounts:
+            - name: authorized-keys
+              mountPath: /var/lib/bastion/authorized_keys
+              subPath: authorized_keys
+              readOnly: true
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+      volumes:
+        - name: authorized-keys
+          configMap:
+            name: bastion-authorized-keys
+            items:
+              - key: authorized_keys
+                path: authorized_keys
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bastion-authorized-keys
+  namespace: default
+data:
+  authorized_keys: |
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYZdCuRUIxBoFGD9DHN47VaVaCUAOLRMzo8QxAvfhO+YDiOINNH8Subf7+T6kRxqA4cn8kOuwBn3kjZwIG6I3MDN5dHm4a4nrlYxBZMRNpYwoBs6v0Gi3l9VwOYU/Hk32Wa6t7l6EWhHOpHBPK8iaEOrC4oqaOFq+oltc6etsr4BeC9as4bVPvAwh6c3lYzj7uzFLIQASC8i9lyTjDY8pZP70ptgj7W5fEe9jO+9ax0hQezWxYNJ3NUCrkqf/MHhFwRC+goQjhB6Fd6oPYmtEzK0YVVO5RmJ7tfmP/MvdhMCmSbs5K+avA5bJN93rl3mwJAMUXx60KeuXJtJbeVnEX rajeev1982@gmail.com
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbOlClwjO6sxt6YNVquTndfFh30Iqloo57123EoFN0nCeR/PETJRKVSVNBOsew2jqbf7nRAmivVCOYjepedQkMNSGrs1o6fPtfptsf9kFBq3IRUsGN+J1OdF33YM3wVzh8/zl6WEoNObdH55ENeR1XAFj+52Gtq2ErjXmVp+tmSjwcX3vmD1NyJumSg7FJdOFkbDiFdfZBGOzwixXdTorBMiEvf3rvGrgNb3foBZps/ooNyUAIYC6WCX4nm2BDY55KPJi+EYx/SKH+XuIJs9QAOt8bPDMAhAF5Pp/UpxmCt9xvB8p9L5d9XVx7HO9k6B+gMVqw6bYjTpMzBfLjFEKd ivasharma0107@gmail.com
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bastion
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: bastion
+  ports:
+    - name: bastion
+      targetPort: service-port
+      port: 22
+      protocol: TCP
+      nodePort: 30022

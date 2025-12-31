@@ -4,20 +4,20 @@ metadata:
   name: fastify-demo
   namespace: tutorial
   labels:
-    app-name: fastify-demo
+    app: fastify-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app-name: fastify-demo
+      app: fastify-demo
   template:
     metadata:
       labels:
-        app-name: fastify-demo
+        app: fastify-demo
     spec:
       containers:
         - name: fastify-demo
-          image: funistoeng/procure:fastify-demo-20251227213638
+          image: funistoeng/procure:fastify-demo-20251228073826
           ports:
             - containerPort: 3000
               name: service-port
@@ -54,7 +54,7 @@ metadata:
   namespace: tutorial
 spec:
   selector:
-    app-name: fastify-demo
+    app: fastify-demo
   ports:
     - name: service-port
       protocol: TCP

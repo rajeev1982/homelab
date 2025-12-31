@@ -4,17 +4,17 @@ metadata:
   name: postgres
   namespace: tutorial
   labels:
-    app-name: postgres
+    app: postgres
 spec:
   serviceName: postgres
   replicas: 1
   selector:
     matchLabels:
-      app-name: postgres
+      app: postgres
   template:
     metadata:
       labels:
-        app-name: postgres
+        app: postgres
     spec:
       containers:
         - name: postgres
@@ -83,7 +83,7 @@ metadata:
   namespace: tutorial
 spec:
   selector:
-    app-name: postgres
+    app: postgres
   ports:
     - name: service-port
       protocol: TCP
