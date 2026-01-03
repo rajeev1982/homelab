@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: fastify-demo
-          image: funistoeng/procure:fastify-demo-20251228073826
+          image: funistoeng/procure:fastify-demo-20260103175051
           ports:
             - containerPort: 3000
               name: service-port
@@ -26,6 +26,8 @@ spec:
               value: "Asia/Kolkata"
             - name: NODE_ENV
               value: "production"
+            - name: NEW_RELIC_HOME
+              value: "./config"
           livenessProbe:
             httpGet:
               path: /ping
