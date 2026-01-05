@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: fastify-demo
-          image: funistoeng/procure:fastify-demo-20260103180909
+          image: funistoeng/procure:fastify-demo-20260104123921
           ports:
             - containerPort: 3000
               name: service-port
